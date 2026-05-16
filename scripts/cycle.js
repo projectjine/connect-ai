@@ -1,24 +1,10 @@
 #!/usr/bin/env node
 /**
- * Standalone 24h autonomous cycle for Connect AI Lab.
- *
- * Runs OUTSIDE the VS Code extension lifecycle so the company keeps working
- * even when the IDE is closed. Reads the brain folder, asks the local LLM to
- * decide one priority task, executes it as a CEO planner round, writes the
- * output to <brain>/sessions/<ts>/, and appends to the daily conversation log.
- *
- * Schedule via macOS launchd / Linux cron / Windows Task Scheduler. Examples
- * at the bottom of this file.
- *
- * Requirements:
- *   - Node 18+
- *   - Ollama OR LM Studio running locally
- *   - axios (npm i axios)
- *
- * Usage:
- *   node cycle.js                          # uses defaults
- *   BRAIN_DIR=~/my-brain node cycle.js     # custom brain folder
- *   OLLAMA_URL=http://127.0.0.1:11434 MODEL=gemma4:e2b node cycle.js
+ * Standalone 24h autonomous cycle for Connect AI Lab — 요한계시록 학술 오토메이션 에디션.
+ * * [완벽 수정 포인트]:
+ * 1. 'pdfParse is not a function' 에러를 원천 차단하는 안전 인터페이스 로직 적용.
+ * 2. identity.md에 정의된 '레오, 현빈, 코다리'의 협업 페르소나 지침을 시스템 프롬프트에 정밀 결합.
+ * 3. 윈도우 LM Studio(localhost:1234) 전용 다이렉트 통신 파이프라인 구축.
  */
 
 const fs = require('fs');
@@ -26,12 +12,21 @@ const path = require('path');
 const os = require('os');
 const axios = require('axios');
 
-// ───────────────────────── Config (env-overridable) ─────────────────────────
-const BRAIN_DIR = (process.env.BRAIN_DIR || path.join(os.homedir(), '.connect-ai-brain')).replace(/^~/, os.homedir());
-const OLLAMA_URL = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
-const LMSTUDIO_URL = process.env.LMSTUDIO_URL || 'http://127.0.0.1:1234';
-const MODEL = process.env.MODEL || 'gemma4:e2b';
-const TIMEOUT_MS = parseInt(process.env.TIMEOUT_MS || '180000', 10);
+let pdfParse;
+try {
+    const pdfExtract = require('pdf-parse');
+    pdfParse = typeof pdfExtract === 'function' ? pdfExtract : pdfExtract.default;
+} catch (e) {
+    console.error("✗ 'pdf-parse' 패키지가 설치되지 않았습니다. 터미널에 'npm install pdf-parse'를 실행해 주세요.");
+    process.exit(1);
+}
+
+// ───────────────────────── Config (LM Studio 전용 다이렉트 고정) ─────────────────────────
+const BRAIN_DIR = 'C:\\AI\\Company-Book';
+const LMSTUDIO_URL = 'http://localhost:1234';
+const MODEL = 'Qwen/Qwen2.5-7B-Instruct-GGUF';
+const TIMEOUT_MS = 900000; // 15분 대기
+const PAGES_PER_CYCLE = 5; // 하루 안전 진도 5페이지
 
 // ───────────────────────── Helpers ─────────────────────────
 const safeRead = (p) => { try { return fs.readFileSync(p, 'utf-8'); } catch { return ''; } };
@@ -39,121 +34,141 @@ const today = () => new Date().toISOString().slice(0, 10);
 const nowTs = () => new Date().toISOString().replace(/[:.]/g, '-').slice(0, 16);
 
 async function detectEngine() {
-    try { await axios.get(`${OLLAMA_URL}/api/tags`, { timeout: 1500 }); return { kind: 'ollama', url: OLLAMA_URL }; } catch {}
-    try { await axios.get(`${LMSTUDIO_URL}/v1/models`, { timeout: 1500 }); return { kind: 'lmstudio', url: LMSTUDIO_URL }; } catch {}
-    throw new Error('No local LLM detected. Ensure Ollama or LM Studio is running.');
+    try {
+        await axios.get(`${LMSTUDIO_URL}/v1/models`, { timeout: 3000 });
+        return { kind: 'lmstudio', url: LMSTUDIO_URL };
+    } catch (e) {
+        throw new Error(`LM Studio가 응답하지 않습니다. 프로그램이 켜져 있고 [Start Server]가 ON 상태인지 확인해 주세요.`);
+    }
 }
 
 async function callLLM(engine, system, user) {
-    if (engine.kind === 'lmstudio') {
-        const r = await axios.post(`${engine.url}/v1/chat/completions`, {
-            model: MODEL, stream: false, max_tokens: 2048, temperature: 0.6,
-            messages: [ { role: 'system', content: system }, { role: 'user', content: user } ],
-        }, { timeout: TIMEOUT_MS });
-        return r.data.choices?.[0]?.message?.content || '';
-    }
-    const r = await axios.post(`${engine.url}/api/chat`, {
-        model: MODEL, stream: false,
-        messages: [ { role: 'system', content: system }, { role: 'user', content: user } ],
-        options: { num_ctx: 8192, num_predict: 2048, temperature: 0.6 },
+    const r = await axios.post(`${engine.url}/v1/chat/completions`, {
+        model: MODEL, stream: false, max_tokens: 4000, temperature: 0.3,
+        messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
     }, { timeout: TIMEOUT_MS });
-    return r.data.message?.content || '';
+    return r.data.choices?.[0]?.message?.content || '';
+}
+
+// ───────────────────────── PDF Range Extractor ─────────────────────────
+async function extractPdfPageRange(pdfPath, startPage, endPage) {
+    const dataBuffer = fs.readFileSync(pdfPath);
+    let currentPage = 0;
+    const options = {
+        pagerender: function (pageData) {
+            currentPage++;
+            if (currentPage >= startPage && currentPage <= endPage) {
+                return pageData.getTextContent().then(function (textContent) {
+                    let text = '';
+                    for (let item of textContent.items) {
+                        text += item.str + ' ';
+                    }
+                    return text + `\n\n--- [PDF PAGE ${currentPage}] ---\n\n`;
+                });
+            }
+            return Promise.resolve('');
+        }
+    };
+    const parsed = await pdfParse(dataBuffer, options);
+    return parsed.text || '';
 }
 
 // ───────────────────────── Cycle body ─────────────────────────
 async function runCycle() {
-    if (!fs.existsSync(path.join(BRAIN_DIR, '_shared'))) {
-        console.error(`✗ Brain folder not initialized at ${BRAIN_DIR}. Open the IDE extension once to set up.`);
+    const sharedDir = path.join(BRAIN_DIR, '_shared');
+    if (!fs.existsSync(sharedDir)) {
+        fs.mkdirSync(sharedDir, { recursive: true });
+    }
+
+    const engine = await detectEngine();
+    console.log(`✓ 엔진 감지 완료: ${engine.kind} @ ${engine.url} · 모델: ${MODEL}`);
+
+    const criticalDataDir = path.join(BRAIN_DIR, 'Critical_Data');
+    if (!fs.existsSync(criticalDataDir)) {
+        fs.mkdirSync(criticalDataDir, { recursive: true });
+        process.exit(0);
+    }
+
+    const files = fs.readdirSync(criticalDataDir);
+    const pdfFile = files.find(f => f.toLowerCase().endsWith('.pdf'));
+
+    if (!pdfFile) {
+        console.error(`✗ 'Critical_Data' 폴더 내에 요한계시록 주석 PDF 파일이 존재하지 않습니다.`);
         process.exit(1);
     }
-    const engine = await detectEngine();
-    console.log(`✓ Engine: ${engine.kind} @ ${engine.url} · model: ${MODEL}`);
+    const targetPdfPath = path.join(criticalDataDir, pdfFile);
+    console.log(`✓ 연구 대상 주석서 감지: ${pdfFile}`);
 
-    const identity = safeRead(path.join(BRAIN_DIR, '_shared', 'identity.md')).slice(0, 1500);
-    const goals = safeRead(path.join(BRAIN_DIR, '_shared', 'goals.md')).slice(0, 2000);
-    const decisions = safeRead(path.join(BRAIN_DIR, '_shared', 'decisions.md')).slice(-2000);
+    const progressFilePath = path.join(sharedDir, 'research_progress.json');
+    let progress = { current_file: pdfFile, last_read_page: 0 };
+    if (fs.existsSync(progressFilePath)) {
+        try { progress = JSON.parse(fs.readFileSync(progressFilePath, 'utf-8')); } catch (e) { }
+    }
 
-    const sysPrompt = `당신은 자율적으로 운영되는 1인 AI 기업의 CEO입니다. 사용자가 자리에 없는 동안 회사를 가치 있는 방향으로 한 걸음 진전시키는 단일 작업을 결정하고 실행합니다.
+    if (progress.current_file !== pdfFile) {
+        progress = { current_file: pdfFile, last_read_page: 0 };
+    }
 
-[회사 정체성]
-${identity}
+    const startPage = progress.last_read_page + 1;
+    const endPage = startPage + PAGES_PER_CYCLE - 1;
+    console.log(`📚 오늘의 연구 진도 설정: ${startPage}페이지 ~ ${endPage}페이지 (총 ${PAGES_PER_CYCLE}p 독해 시작)`);
 
-[공동 목표]
-${goals}
+    console.log('· 코다리가 PDF 파싱 및 텍스트 청크 변환 작업을 진행 중...');
+    const todaysRawText = await extractPdfPageRange(targetPdfPath, startPage, endPage);
 
-[최근 의사결정]
-${decisions}
+    if (!todaysRawText.trim() || todaysRawText.length < 100) {
+        console.log(`🏁 주석서의 끝에 도달했거나 읽을 수 있는 텍스트가 없습니다. 연구 사이클을 종료합니다.`);
+        process.exit(0);
+    }
 
-지금 가장 가치 있는 작업 1개를 선택해서 직접 수행하세요. 출력은 마크다운으로:
+    const identityConfig = safeRead(path.join(sharedDir, 'identity.md'));
+    const decisions = safeRead(path.join(sharedDir, 'decisions.md')).slice(-3000);
 
-# 🌙 자율 사이클 — ${today()} ${new Date().toLocaleTimeString('ko-KR', {hour:'2-digit',minute:'2-digit'})}
+    const sysPrompt = `당신은 요한계시록 학술 연구 자동화 연구소(Company-Book)의 수석 조율관입니다.
+배속된 세 명의 AI 연구원(레오, 현빈, 코다리)의 지침과 정체성을 엄격히 준수하여 최종 리포트를 도출하세요.
 
-## 선택한 작업
-(왜 이 작업이 가장 가치 있는지)
+${identityConfig ? `[배속 에이전트 및 운영 지침]\n${identityConfig}` : '[주의]: identity.md 파일이 비어있습니다. 기본 학술 비평 모드로 작동합니다.'}
 
-## 실행 결과
-(실제 산출물 — 영상 기획서·카피·전략 분석 등 즉시 사용 가능한 형태)
+[이전 연구 컨텍스트 및 누적 내역]
+${decisions || '최초의 연구 사이클입니다.'}
 
-## 다음 사이클 추천
-(다음에 할 가치 있는 1~2가지)`;
+[오늘의 핵심 임무]
+1. 제공된 주석서 원문(${startPage}p~${endPage}p)을 바탕으로 요한계시록 장-절별 매트릭스를 구성하세요.
+2. 레오의 임무에 따라 교회사 속 '4대 패러다임(과거주의, 역사주의, 미래주의, 상징주의)' 관점을 철학적·시스템적으로 촘촘하게 분리하여 작성하세요.
+3. 현빈의 임무에 따라 사이비·이단 교파들의 왜곡된 노이즈 해석(비유 풀이, 공포 마케팅)을 정통 비평학과 대조하여 날카롭게 걸러내고 비평 탭에 고발하세요.
+4. 코다리의 임무에 따라 가독성이 높은 백과사전식 마크다운 구조(테이블, 불릿 포인트, 굵은 글씨 활용)로만 출력하세요. 다른 잡설은 생략합니다.`;
 
-    const userMsg = `현재 시각: ${new Date().toISOString()}. 사용자가 자리를 비웠습니다. 회사 가치를 높이는 한 걸음을 진행하세요.`;
+    const userMsg = `## 오늘의 연구 대상 주석 원문 (${pdfFile} - ${startPage}p~${endPage}p)
+${todaysRawText}
 
-    console.log('· Calling LLM...');
-    const out = await callLLM(engine, sysPrompt, userMsg);
-    if (!out.trim()) throw new Error('Empty LLM response.');
+위의 5페이지 분량을 정독하고, 배속된 세 연구원(레오, 현빈, 코다리)의 정체성이 100% 녹아든 백과사전식 4대 패러다임 리포트를 마크다운으로 출력해 주세요.`;
 
-    // Save to a session folder
-    const sessionDir = path.join(BRAIN_DIR, 'sessions', `auto-${nowTs()}`);
+    console.log('· 에이전트 협업 연구 진행 중 (로컬 LLM 연산)... 오래 걸릴 수 있으니 창을 닫지 마세요.');
+    const out = await callLLM(engine, system = sysPrompt, user = userMsg);
+    if (!out.trim()) throw new Error('에이전트가 리포트 생성에 실패했습니다. (답변이 비어있음)');
+
+    const sessionDir = path.join(BRAIN_DIR, 'sessions', `research-${nowTs()}`);
     fs.mkdirSync(sessionDir, { recursive: true });
-    fs.writeFileSync(path.join(sessionDir, '_report.md'), out);
+    fs.writeFileSync(path.join(sessionDir, `page_${startPage}-${endPage}_report.md`), out);
 
-    // Append to daily conversation log so the IDE-side timeline picks it up
     const convDir = path.join(BRAIN_DIR, '00_Raw', 'conversations');
     fs.mkdirSync(convDir, { recursive: true });
     const dayFile = path.join(convDir, `${today()}.md`);
     if (!fs.existsSync(dayFile)) {
-        fs.writeFileSync(dayFile, `# 📜 ${today()} 회사 대화록\n\n_모든 명령·분배·산출물·대화가 시간순으로 누적됩니다._\n`);
+        fs.writeFileSync(dayFile, `# 📜 ${today()} 요한계시록 학술 연구 대화록\n`);
     }
     const ts = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-    const block = `\n## [${ts}] 🌙 **자율 사이클** · _IDE 외부_\n\n${out}\n`;
+    const block = `\n## [${ts}] 🌙 **일일 5페이지 자동화 연구 사이클** (${startPage}p~${endPage}p)\n\n${out}\n`;
     fs.appendFileSync(dayFile, block);
 
-    console.log(`✓ Cycle complete. Output saved: ${sessionDir}/_report.md`);
-    console.log(`✓ Conversation log: ${dayFile}`);
+    progress.last_read_page = endPage;
+    fs.writeFileSync(progressFilePath, JSON.stringify(progress, null, 2));
+
+    console.log(`✓ 사이클 완료! 산출물이 저장되었습니다: ${sessionDir}/page_${startPage}-${endPage}_report.md`);
+    console.log(`✓ 진도 장부 업데이트: 다음엔 ${endPage + 1}페이지부터 가동됩니다.`);
 }
 
-// ───────────────────────── Run + error handling ─────────────────────────
 runCycle().catch((e) => {
-    console.error('✗ Cycle failed:', e.message);
+    console.error('✗ 사이클 구동 실패:', e.message);
     process.exit(1);
 });
-
-/* ─── Scheduling examples ─────────────────────────────────────────────────
-
-# macOS launchd — every 30 minutes
-# Save as ~/Library/LaunchAgents/com.connectai.cycle.plist
-# <?xml version="1.0" encoding="UTF-8"?>
-# <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-# <plist version="1.0">
-# <dict>
-#   <key>Label</key><string>com.connectai.cycle</string>
-#   <key>ProgramArguments</key>
-#   <array>
-#     <string>/usr/local/bin/node</string>
-#     <string>/path/to/cycle.js</string>
-#   </array>
-#   <key>StartInterval</key><integer>1800</integer>
-#   <key>StandardOutPath</key><string>/tmp/connectai.cycle.log</string>
-#   <key>StandardErrorPath</key><string>/tmp/connectai.cycle.err</string>
-# </dict>
-# </plist>
-# Then: launchctl load ~/Library/LaunchAgents/com.connectai.cycle.plist
-
-# Linux/macOS cron — every 30 minutes
-# */30 * * * * /usr/local/bin/node /path/to/cycle.js >> ~/.connect-ai-brain/cycle.log 2>&1
-
-# Windows Task Scheduler — create a task that runs node.exe with this script as arg
-# every 30 min, with working directory set to the brain folder.
-
-──────────────────────────────────────────────────────────────────────────── */
