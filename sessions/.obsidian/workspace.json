@@ -11,10 +11,14 @@
             "id": "2e28cd94b67bf485",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "research-2026-05-16T04-21/page_1-5_report.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "page_1-5_report"
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "research-2026-05-16T04-21/page_1-5_report.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "백링크"
+              "title": "page_1-5_report 의 백링크"
             }
           },
           {
@@ -108,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "research-2026-05-16T04-21/page_1-5_report.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "나가는 링크"
+              "title": "page_1-5_report 의 나가는 링크"
             }
           },
           {
@@ -150,12 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "research-2026-05-16T04-21/page_1-5_report.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "개요"
+              "title": "page_1-5_report 의 개요"
             }
           }
         ]
@@ -178,11 +185,11 @@
   },
   "active": "2e28cd94b67bf485",
   "lastOpenFiles": [
+    "research-2026-05-16T04-21/page_1-5_report.md",
+    "analysis_연구_대상_구역.md",
     "~$alysis_연구_대상_구역 - 복사본.md",
     "analysis_연구_대상_구역 - 복사본.md",
     "page_110-114_report.md",
-    "analysis_연구_대상_구역.md",
-    "page_105-109_report.md",
-    "research-2026-05-16T04-21/page_1-5_report.md"
+    "page_105-109_report.md"
   ]
 }

@@ -14,7 +14,7 @@ const safeRead = (p) => { try { return fs.readFileSync(p, 'utf-8'); } catch { re
 const today = () => new Date().toISOString().slice(0, 10);
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// _shared/key.txt 파일에서 새 API 키를 안전하게 격리 로드하는 보안 서클
+// _shared/key.txt 파일에서 새 API 키를 안전하게 격리 로드하는 보안 로직
 const sharedDir = path.join(BRAIN_DIR, '_shared');
 const GEMINI_API_KEY = safeRead(path.join(sharedDir, 'key.txt')).trim();
 
@@ -46,7 +46,7 @@ async function run() {
 
     const targetVerses = `
 ★ [반드시 본문에 원형 그대로 기재해야 하는 3대 고정 구절 문장 원형]
-- [구절 1] 요한계시록 1장 20절 "네가 본 것은 내 오른손의 일겁 별의 비밀과 또 일겁 금 촛대라"
+- [구절 1] 요한계시록 1장 20절 "네가 본 것은 내 오른손의 일곱 별의 비밀과 또 일곱 금 촛대라"
 - [구절 2] 요한계시록 2장 17절 "이기는 그에게는 내가 감추었던 만나를 주고 또 흰 돌을 줄 터인데"
 - [구절 3] 요한계시록 13장 18절 "지혜가 여기 있으니 총명한 자는 그 짐승의 수를 세어 보라 그것은 사람의 수니 그의 수는 육백육십육이니라"
 `;
@@ -120,7 +120,7 @@ async function run() {
             const { execSync } = require('child_process');
             console.log('· [원격 요새 백업] 깃허브 업로드 중...');
             execSync('git add .', { cwd: BRAIN_DIR });
-            execSync(`git commit -m "Antigravity-Watcher: ${rangeStr} v7 secure leak-proof-v2"`, { cwd: BRAIN_DIR });
+            execSync(`git commit -m "Antigravity-Watcher: ${rangeStr} v7 secure leak-proof"`, { cwd: BRAIN_DIR });
             execSync('git push origin main', { cwd: BRAIN_DIR });
             console.log(`🚀 [자동화 공정 완벽 완공] 깃허브 반영 완료!`);
         } catch (gitErr) {
