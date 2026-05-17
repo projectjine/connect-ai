@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Antigravity High-Density Segregation Engine - Final Version
- * [누적 컨텍스트 과부하 원천 차단 + 지침서 개별 분절 로드 + 성경 문장 원형 강제 주입]
+ * Antigravity Ultra-Density 9-Segregation Engine - Final Master
+ * [공정 체인 9단계 최종 세분화 + 외부 key.txt 로드 + 성경 문장 원형 강제 주입]
  */
 
 const fs = require('fs');
@@ -38,7 +38,7 @@ async function run() {
     const rangeMatch = rawContent.match(/범위:\s*([^\n\r]+)/) || ["", "연구 대상 구역"];
     const rangeStr = rangeMatch[1].trim().replace(/[:/\\*?|<>=]/g, '');
 
-    console.log(`🚀 [안티그래비티 각개격파 분절 오토메이션 가동] 대상 구역: [${rangeStr}]`);
+    console.log(`🚀 [안티그래비티 9단계 풀-체인 분절 오토메이션 가동] 대상 구역: [${rangeStr}]`);
 
     const decisions = safeRead(path.join(sharedDir, 'decisions.md')).slice(-3000);
 
@@ -49,23 +49,29 @@ async function run() {
 - [구절 3] 요한계시록 13장 18절 "지혜가 여기 있으니 총명한 자는 그 짐승의 수를 세어 보라 그것은 사람의 수니 그의 수는 육백육십육이니라"
 `;
 
+    // 9단계 초정밀 공정 파이프라인 레이아웃
     const roles = [
-        { id: 1, name: "■ 역할 1번 (What 요원)", file: "identity_1.md" },
-        { id: 2, name: "■ 역할 2번 (Mechanism 요원)", file: "identity_2.md" },
-        { id: 3, name: "■ 역할 3번 (Context 요원)", file: "identity_3.md" },
-        { id: 4, name: "■ 역할 4번 (Archiver 요원)", file: "identity_4.md" },
-        { id: 5, name: "■ 역할 5번 (Publisher 요원)", file: "identity_5.md" }
+        { id: 1, name: "■ 역할 1번 (What 요원)", file: "identity_1.md", header: "### ■ 역할 1번 (What 요원)" },
+        { id: 2, name: "■ 역할 2번 (Mechanism 요원)", file: "identity_2.md", header: "### ■ 역할 2번 (Mechanism 요원)" },
+        { id: 3, name: "■ 역할 3번 (Context 요원)", file: "identity_3.md", header: "### ■ 역할 3번 (Context 요원)" },
+        { id: 41, name: "■ 역할 4-1번 (일곱 별 아카이버)", file: "identity_4_1.md", header: "### ■ 역할 4번 (Archiver 요원) - 구절 1 통합" },
+        { id: 42, name: "■ 역할 4-2번 (흰 돌 아카이버)", file: "identity_4_2.md", header: "## 구절 2 통합" },
+        { id: 43, name: "■ 역할 4-3번 (666 아카이버)", file: "identity_4_3.md", header: "## 구절 3 통합" },
+        { id: 51, name: "■ 역할 5-1번 (일곱 별 퍼블리셔)", file: "identity_5_1.md", header: "### ■ 역할 5번 (Publisher 요원) - 대조 매트릭스 [구절 1]" },
+        { id: 52, name: "■ 역할 5-2번 (흰 돌 퍼블리셔)", file: "identity_5_2.md", header: "## 대조 매트릭스 [구절 2]" },
+        { id: 53, name: "■ 역할 5-3번 (666 퍼블리셔 및 마감)", file: "identity_5_3.md", header: "## 대조 매트릭스 [구절 3] 및 최종 함수 정리" }
     ];
 
     let accumulatedReport = "";
+    let idx = 1;
 
     for (const role of roles) {
-        if (role.id > 1) {
-            console.log(`· 트래픽 과부하 방지 안전 대기 중... (8초 후 ${role.id}번 독립 세션 출격)`);
+        if (idx > 1) {
+            console.log(`· 503 과부하 방지 안전 대기 중... (8초 후 ${role.name} 세션 출격)`);
             await sleep(8000);
         }
 
-        console.log(`\n· [스텝 ${role.id}/5] ${role.name} 독점 연산 시작...`);
+        console.log(`\n· [스텝 ${idx}/9] ${role.name} 독립 연산 가동...`);
 
         const roleSpecificIdentity = safeRead(path.join(sharedDir, role.file));
         if (!roleSpecificIdentity) {
@@ -73,11 +79,8 @@ async function run() {
             process.exit(1);
         }
 
-        const systemInstruction = `${roleSpecificIdentity}\n\n[이전 연구 자산]\n${decisions}\n\n주의: 당신은 오직 이 지침서에 명시된 임무만 독점적으로 수행하며, 가치판단 단어를 절대 쓰지 마십시오.`;
-
-        // 핵심 수정: 프롬프트에서 앞 단계의 무거운 누적 줄글 기록(accumulatedReport)을 과감히 도려내어 뇌 용량 확보
-        // 오직 성경 원형, 원본 원자재 데이터, 그리고 자신의 독점 지침만 바라보고 연산하게 함
-        const prompt = `${targetVerses}\n\n[원본 분석 데이터]\n${rawContent}\n\n위의 3대 고정 구절과 문장 원형을 생략 없이 그대로 기재하고, 당신의 독립 지침서 내용에만 100% 집중하여 팩트 결과를 요약 없이 정밀하게 정리해 주세요. 표(Table) 양식이 지정되어 있다면 절대로 생략하지 말고 끝까지 칸을 채우세요.`;
+        const systemInstruction = `${roleSpecificIdentity}\n\n[이전 연구 자산]\n${decisions}\n\n주의: 당신은 오직 이 분절된 지침서에 명시된 임무만 독점 수행하며, 출력 한계선 눈치 보지 말고 최고 밀도로 쏟아내십시오.`;
+        const prompt = `${targetVerses}\n\n[원본 분석 데이터]\n${rawContent}\n\n위의 3대 고정 구절과 문장 원형을 생략 없이 그대로 기재하고, 지침에 따라 오직 당신에게 할당된 독립 임무에만 100% 집중하여 팩트 결과만 정밀하게 정리해 주세요. 지정된 양식(표 등)이 있다면 절대로 자르지 말고 끝까지 채워 출력하세요.`;
 
         try {
             const response = await ai.models.generateContent({
@@ -91,17 +94,18 @@ async function run() {
             });
 
             const blockResult = response.text || '';
-            accumulatedReport += `\n\n### ${role.name}\n${blockResult}`;
-            console.log(`✓ [스텝 ${role.id}/5 완료] ${role.name} 독점 데이터 확보 성공.`);
+            accumulatedReport += `\n\n${role.header}\n${blockResult}`;
+            console.log(`✓ [스텝 ${idx}/9 완료] ${role.name} 데이터 완벽 확보.`);
+            idx++;
         } catch (err) {
-            console.error(`✗ [스텝 ${role.id} 연산 중 실패]:`, err.message);
+            console.error(`✗ [스텝 ${role.name} 실패]:`, err.message);
             process.exit(1);
         }
     }
 
     try {
         const verseClean = rangeStr.replace(/analysis_/g, '').replace(/_/g, ' ');
-        const frontmatter = `---\nverse: "${verseClean}"\nera: ["1st-Century", "Patristic", "Medieval", "Reformation", "Modern", "21st-Century"]\nscholars: ["Aune", "Origen", "Augustine", "Joachim", "Luther", "Grotius", "Darby", "Shincheonji"]\nkeywords: ["Horizontal Anchor", "Absolute-Text", "No-Evaluation-v7"]\n---\n\n## ANTIGRAVITY INTEGRATED COORDINATION REPORT — REV-HISTORICAL-DATA-INTEGRATION\n\n본 보고서는 제공된 데이터 기반으로 요한계시록의 1세기 역사학적 고증과 이후 2,000년간 발생한 주요 해석 데이터 세트를 수평적으로 구조화하고 대조한 정밀 상세 기술서입니다.`;
+        const frontmatter = `---\nverse: "${verseClean}"\nera: ["1st-Century", "Patristic", "Medieval", "Reformation", "Modern", "21st-Century"]\nscholars: ["Aune", "Origen", "Augustine", "Joachim", "Luther", "Grotius", "Darby", "Shincheonji"]\nkeywords: ["Horizontal Anchor", "Absolute-Text", "9-Segregation-Perfect"]\n---\n\n## ANTIGRAVITY INTEGRATED COORDINATION REPORT — REV-HISTORICAL-DATA-INTEGRATION\n\n본 보고서는 제공된 데이터 기반으로 요한계시록의 1세기 역사학적 고증과 이후 2,000년간 발생한 주요 해석 데이터 세트를 수평적으로 구조화하고 대조한 정밀 상세 기술서입니다.`;
 
         const fixedPhrase = `\n\n---\n> 📝 *이 내용의 통찰은 책 《사기쳐줘서 고마워》 내용을 통해 정리하였습니다.*`;
         const finalMasterpiece = frontmatter + accumulatedReport + fixedPhrase + `\n\n"본 보고서는 요한계시록의 주요 구절에 대한 시대별·주체별 해석 데이터를 수평선상에 나열하여 각각의 객관적 해석 메커니즘을 상호 비교하고, 이를 하나의 다차원적 해석학 지식 체계로 통합하며 분석을 마감함."`;
@@ -111,18 +115,18 @@ async function run() {
         const fileName = `analysis_${rangeStr.replace(/\s+/g, '_')}.md`;
 
         fs.writeFileSync(path.join(sessionDir, fileName), finalMasterpiece, 'utf8');
-        console.log(`\n🏆 [각개격파 오토메이션 완공] sessions/${fileName} 에 최고 밀도 원고 저장 완료!`);
+        console.log(`\n🏆 [9단계 오토메이션 마스터피스 조립 완공] sessions/${fileName} 저장 완료!`);
 
         const masterIndexPath = path.join(BRAIN_DIR, 'MASTER_INDEX.md');
-        fs.appendFileSync(masterIndexPath, `- [${today()}] 요한계시록 5인 개별 분절 융합 리포트 (${rangeStr}) ➔ [[sessions/${fileName}]]\n`);
+        fs.appendFileSync(masterIndexPath, `- [${today()}] 요한계시록 9단계 극초밀도 개별 분절 리포트 (${rangeStr}) ➔ [[sessions/${fileName}]]\n`);
 
         try {
             const { execSync } = require('child_process');
             console.log('· [원격 요새 백업] 깃허브 업로드 중...');
             execSync('git add .', { cwd: BRAIN_DIR });
-            execSync(`git commit -m "Antigravity-Watcher: ${rangeStr} v7 final absolute perfect"`, { cwd: BRAIN_DIR });
+            execSync(`git commit -m "Antigravity-Watcher: ${rangeStr} v7 9-chain loop perfect"`, { cwd: BRAIN_DIR });
             execSync('git push origin main', { cwd: BRAIN_DIR });
-            console.log(`🚀 [자동화 공정 완벽 완공] 깃허브 반영 완료!`);
+            console.log(`🚀 [자동화 공정 전체 완료] 최종 완결본 원터치 백업 성공!`);
         } catch (gitErr) {
             console.log(`⚠️ 깃허브 백업 보류 (원고 자산은 로컬에 세이브됨)`);
         }
