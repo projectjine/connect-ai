@@ -1,0 +1,45 @@
+🇰🇷 한국어 버전 (Korean Version)
+■ 1. 타깃 텍스트 좌표 및 목차 제목
+●	도서명 및 볼륨: Comentario de David Aune de la WBC sobre el Apocalipsis, vol. 1 (Revelation 1-5)
+●	지정 페이지 번호: p. xi - xx (Abbreviations)
+●	해당 페이지가 속한 대목차/소목차 제목: PREFACE / ABBREVIATIONS (서문 및 학술 약어표)
+■ 2. 페이지 내용 순수 번역 및 핵심 정리 (Content Digest)
+●	주석서의 저작 배경 및 헌사 (p. xi-xii): 데이비드 아우네(David E. Aune)의 요한계시록 주석 연구는 1982-1983 학년도 노르웨이 트론헤임 대학교(University of Trondheim) 종교학과에 풀브라이트(Fulbright) 초빙교수로 체류하며 시작됨. 당시 호스트였던 페더 보르겐(Peder Borgen) 교수 부부에게 사의를 표함. 이후 12년이 지난 1994-1995년 독일 튀빙겐 대학교(University of Tübingen)에서 알렉산더 폰 훔볼트 연구상(Alexander von Humboldt Forschungspreis)을 수상하여 고증 연구를 최종 완성함. 호스트였던 마르틴 헹겔(Martin Hengel), 피터 슈툴마허(Peter Stuhlmacher) 교수, 연구 조교 요외르크 프레이(Jörg Frey) 박사의 학술적 조력을 기록하고 본 서적을 보르겐과 헹겔 교수에게 헌정함. 본 주석서는 저자의 전작인 『Prophecy in Early Christianity and the Ancient Mediterranean World』(1983)의 학문적 연장선에 있음. 저자는 빌헬름 부셋(Wilhelm Bousset), R. H. 찰스(R. H. Charles)의 역사비평적 성과와 H. C. 호스키어(H. C. Hoskier), 요셉 슈미트(Josef Schmid)의 방대한 사본학적 고증 데이터에 전적으로 의존하고 있음을 명시함.
+●	WBC 주석서의 포맷 및 구성적 특징 (p. x): 본 주석 시리즈는 성경 원어(그리스어 및 히브리어)에 대한 실증적·전문적 고증을 기반으로 하여, 학자부터 평신도까지 다층적 독자층이Scannable하게 scannable하도록 단락을 의도적으로 분리함. 사본학적 이문과 그래머를 검증하는 Notes(노트), 현대 학계의 연구 결과물인 Bibliography(서지), 장르와 역사적 Sitze im Leben을 다루는 Form/Structure/Setting(양식/구조/배경), 개별 구절의 축자적 해석을 다루는 Comment(주석), 전체 본문의 거시적 신학 흐름을 요약하는 Explanation(설명) 단락의 결합으로 구성됨.
+●	고전 문헌, 위경 및 사본학 약어 체계 (p. xiii-xx): 구약·신약 성경 본문 비평, 유대교 외경 및 위경, 쿰란 문헌(Dead Sea Scrolls), 파피루스, 필사본 가문(Families of Manuscripts) 인용에 필요한 전 세계 공통의 고전학·신학 학술 약어를 체계적으로 분류 및 수록함.
+■ 3. 핵심 키워드 (Key Keywords)
+●	Forschungspreis - 훔볼트 연구상 (독일 정부가 해외 최고 석학에게 수여하는 학술상, 튀빙겐 대학교 고증 연구의 물적 기반)
+●	Textual Witnesses - 사본학적 증거물 (원문의 자구적 변이를 실증하기 위해 수집된 그리스어 파피루스, 대문자·소문자 사본 등)
+●	Form/Structure/Setting - 양식/구조/배경 (텍스트가 발생한 1세기 당시의 사회적 정황과 양식사적 분류를 규정하는 방법론)
+●	Notes - 사본 주석 (원어의 문법, 형태론, 통사론적 변이 및 자구적 이문을 미시적으로 검증하는 실증 단락)
+●	Prophecy in Early Christianity - 초기 기독교의 예언 (계시록의 선지자 요한을 연구하기 위한 역사적·문맥적 선행 연구 모델)
+■ 4. 당대 사회적·문화적 환경 고증 (Socio-Cultural Setting)
+●	1세기 고대 지중해 세계의 예언적·학술적 소통 환경: 저자는 서문에서 본 계시록 주석이 고대 지중해 연안 및 초기 기독교 세계의 '예언(Prophecy)' 현상을 고증하는 연장선에 있음을 밝힘. 기원후 1세기 유대 사회와 그리스-로마 세계에서 선지자나 묵시가들의 기록물은 개인의 주관적 산물이 아니었음. 그것은 신적 권위를 위임받아 당대의 정치적·사법적 위기(로마 제국의 압박, 황제 숭배 체계, 기근)에 대항해 공동체의 결속을 도모하던 고도의 수사학적 매체였음이 주석서의 기획 단계에서부터 전제됨.
+●	요한계시록 텍스트의 사본학적 변이 환경: 약어표와 서문에서 입증되듯이, 요한계시록의 그리스어 텍스트는 기원후 수 세기 동안 사본 필사자들의 문법적 교정, 신학적 안목에 따른 자구 수정, 비잔틴 Recension(개정판)으로의 통합 과정 등을 거치며 수많은 이문(Variant readings)을 파생시킨 역사적·가변적 전승 환경에 놓여 있었음.
+■ 5. 요한계시록 구절 및 해석 매트릭스 (Scripture & Commentary Matrix)
+(※ 주석서의 서문 및 약어표 단락[p. xi-xx]의 특성상 특정 성경 구절에 대한 저자의 직접적인 본문 해석 문장은 포함되어 있지 않으므로, 구조적 템플릿 일치를 위해 비워둠.)
+요한계시록 구절 좌표	저자가 기술/인용한 실제 문장 및 단어 (Original Sentence)	저자의 1세기 당시 문맥적 해석 내용 (How to Interpret)
+-	-	-
+________________________________________🇺🇸 ENGLISH VERSION (For Amazon KDP Data Base)
+■ 1. Target Coordinates & Chapter/Section Title
+●	Book Title & Volume: Comentario de David Aune de la WBC sobre el Apocalipsis, vol. 1 (Revelation 1-5)
+●	Target Page Number(s): p. xi - xx (Abbreviations)
+●	Table of Contents Title (Major/Minor Section of these pages): PREFACE / ABBREVIATIONS
+■ 2. Page Content Digest & Translation
+●	Genesis of the Commentary and Acknowledgments (p. xi-xii): Serious research on this definitive commentary began during the 1982-1983 academic year at the University of Trondheim, Norway, where David E. Aune served as a Fulbright guest professor in the Department of Religious Studies under the hospitality of Professor Peder Borgen. The project was completed twelve years later (1994-1995) at the University of Tübingen, Germany, facilitated by an Alexander von Humboldt Research Prize (Forschungspreis). Host professors Martin Hengel and Peter Stuhlmacher, along with research assistant Dr. Jörg Frey, provided critical text-critical support at the Theologicum in Tübingen. The commentary is dedicated to Professors Borgen and Hengel. It functions as a direct scholarly continuation of Aune's monumental work Prophecy in Early Christianity and the Ancient Mediterranean World (1983). The author explicitly acknowledges his immense academic debt to the historical-critical commentaries of Wilhelm Bousset and R. H. Charles, as well as the painstaking text-critical data compiled by H. C. Hoskier and Josef Schmid.
+●	Structural Design of the WBC Series (p. x): The Word Biblical Commentary series is strictly grounded in the technical and scholarly analysis of the original biblical languages. It is intentionally organized into distinct sections to ensure maximum scannability for diverse readers: Notes handles the granular textual witnesses and grammatical variants; Bibliography charts the state of modern scholarship; Form/Structure/Setting defines the literary genre and Sitze im Leben; Comment provides word-by-word exegesis; and Explanation synthesizes the macro-theological coherence of the passage.
+●	Scholarly Abbreviations and Textual Apparatus (p. xiii-xx): This section provides a highly structured compendium of international philological abbreviations necessary for referencing Old and New Testament textual criticism, Jewish Pseudepigrapha, Dead Sea Scrolls, ancient papyri, and families of Greek manuscripts.
+■ 3. Key Keywords
+●	Forschungspreis - Humboldt Research Prize (The prestigious German academic award that provided the institutional and research foundation for the historical-critical work at Tübingen.)
+●	Textual Witnesses - Textual Witnesses (The primary source materials—including Greek papyri, uncials, and minuscules—collated to scientifically verify 자구적 variants in the Apocalypse.)
+●	Form/Structure/Setting - Form/Structure/Setting (The specific historical-critical methodology used to define the literary genre and socio-historical setting of the 1st-century text.)
+●	Notes - Textual Notes (The micro-analytical commentary block dedicated to examining the grammatical, morphological, and syntactical variations within the Greek text.)
+●	Prophecy in Early Christianity - Prophecy in Early Christianity (Aune's pre-existing socio-historical research model that laid the contextual groundwork for exploring the seer John.)
+■ 4. 1st-Century Socio-Cultural & Historical Setting
+●	The Prophetic and Rhetorical Communication Environment of the 1st-Century Mediterranean: As articulated in the preface, the text of Revelation cannot be divorced from the broader historical phenomenon of ancient prophecy. In the 1st-century Greco-Roman and early Jewish environments, prophetic-apocalyptic literature did not function as private aesthetic exercises. Rather, it operated as an immediately inspired, authoritative mode of public rhetoric designed to foster community cohesion and navigate concrete socio-political crises, including Roman imperial coercion, local synagogue conflicts, and regional economic distress.
+●	The Variable Environment of Textual Transmission: As evidenced by the extensive list of manuscripts and families (e.g., the Byzantine recension established by Schmid), the Greek text of the Apocalypse existed in a highly fluid scribal environment for centuries. Copyists continuously introduced grammatical emendations, localized corrections, and theological glosses, creating a vast matrix of variant readings that text-critical tools must deconstruct.
+■ 5. Scripture & Commentary Matrix
+(Note: Due to the structural nature of the Preface and Abbreviations sections [p. xi-xx], this block does not contain direct verse-by-verse exegesis of the biblical text and is left blank to preserve the database schema.)
+Scripture Coordinates	Original Text/Sentence by the Author	How to Interpret (Author's Exegesis)
+-	-	-
+
