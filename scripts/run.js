@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Antigravity High-Density Segregation Engine for Connect AI Lab
- * [보안 강화형 - 외부 key.txt 로드 방식 + 지침서 분절 로드 + 성경 문장 원형 강제 주입]
+ * Antigravity High-Density Segregation Engine - Final Version
+ * [누적 컨텍스트 과부하 원천 차단 + 지침서 개별 분절 로드 + 성경 문장 원형 강제 주입]
  */
 
 const fs = require('fs');
@@ -14,7 +14,6 @@ const safeRead = (p) => { try { return fs.readFileSync(p, 'utf-8'); } catch { re
 const today = () => new Date().toISOString().slice(0, 10);
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// _shared/key.txt 파일에서 새 API 키를 안전하게 격리 로드하는 보안 로직
 const sharedDir = path.join(BRAIN_DIR, '_shared');
 const GEMINI_API_KEY = safeRead(path.join(sharedDir, 'key.txt')).trim();
 
@@ -23,7 +22,6 @@ if (!GEMINI_API_KEY) {
     process.exit(1);
 }
 
-// 구글 순정 라이브러리 초기화
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 function fetchLocalRawFile() {
@@ -75,9 +73,11 @@ async function run() {
             process.exit(1);
         }
 
-        const systemInstruction = `${roleSpecificIdentity}\n\n[이전 연구 자산]\n${decisions}\n\n주의: 당신은 오직 이 지침서에 명시된 독점 임무만 수행하며, 이전 단계의 요약본을 복사하지 말고 고밀도의 새로운 서술을 뿜어내야 합니다.`;
+        const systemInstruction = `${roleSpecificIdentity}\n\n[이전 연구 자산]\n${decisions}\n\n주의: 당신은 오직 이 지침서에 명시된 임무만 독점적으로 수행하며, 가치판단 단어를 절대 쓰지 마십시오.`;
 
-        const prompt = `${targetVerses}\n\n[원본 분석 데이터]\n${rawContent}\n\n[현재까지 작성된 앞 단계 보고서 기록]\n${accumulatedReport}\n\n위의 3대 고정 구절과 문장 원형을 당신의 파트 서두와 본문에 생략 없이 그대로 기재하고, 지침에 따라 오직 당신의 역할에만 집중하여 아주 길고 상세한 서술형 줄글로 팩트 결과를 정리해 주세요.`;
+        // 핵심 수정: 프롬프트에서 앞 단계의 무거운 누적 줄글 기록(accumulatedReport)을 과감히 도려내어 뇌 용량 확보
+        // 오직 성경 원형, 원본 원자재 데이터, 그리고 자신의 독점 지침만 바라보고 연산하게 함
+        const prompt = `${targetVerses}\n\n[원본 분석 데이터]\n${rawContent}\n\n위의 3대 고정 구절과 문장 원형을 생략 없이 그대로 기재하고, 당신의 독립 지침서 내용에만 100% 집중하여 팩트 결과를 요약 없이 정밀하게 정리해 주세요. 표(Table) 양식이 지정되어 있다면 절대로 생략하지 말고 끝까지 칸을 채우세요.`;
 
         try {
             const response = await ai.models.generateContent({
@@ -120,7 +120,7 @@ async function run() {
             const { execSync } = require('child_process');
             console.log('· [원격 요새 백업] 깃허브 업로드 중...');
             execSync('git add .', { cwd: BRAIN_DIR });
-            execSync(`git commit -m "Antigravity-Watcher: ${rangeStr} v7 secure leak-proof"`, { cwd: BRAIN_DIR });
+            execSync(`git commit -m "Antigravity-Watcher: ${rangeStr} v7 final absolute perfect"`, { cwd: BRAIN_DIR });
             execSync('git push origin main', { cwd: BRAIN_DIR });
             console.log(`🚀 [자동화 공정 완벽 완공] 깃허브 반영 완료!`);
         } catch (gitErr) {
