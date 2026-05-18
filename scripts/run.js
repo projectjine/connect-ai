@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Antigravity Ultra-Density 9-Segregation Engine - Final Master
- * [공정 체인 9단계 최종 세분화 + 외부 key.txt 로드 + 성경 문장 원형 강제 주입]
+ * Antigravity Ultra-Density 9-Segregation Engine - Pure Academic Edition
+ * [단행본 인용구 완전 소거 + 독립 프로젝트 분리 + 외부 key.txt 로드]
  */
 
 const fs = require('fs');
@@ -15,10 +15,10 @@ const today = () => new Date().toISOString().slice(0, 10);
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const sharedDir = path.join(BRAIN_DIR, '_shared');
-const GEMINI_API_KEY = safeRead(path.join(sharedDir, 'key.txt')).trim();
+const GEMINI_API_KEY = safeRead(path.join(sharedDir, 'key.txt')).replace(/[\r\n\s]/g, '').trim();
 
 if (!GEMINI_API_KEY) {
-    console.error(`\n✗ 에러: _shared/key.txt 파일에 새로운 API 키가 입력되지 않았거나 파일을 찾을 수 없습니다!`);
+    console.error(`\n✗ 에러: _shared/key.txt 파일에 API 키가 입력되지 않았거나 파일을 찾을 수 없습니다!`);
     process.exit(1);
 }
 
@@ -38,7 +38,7 @@ async function run() {
     const rangeMatch = rawContent.match(/범위:\s*([^\n\r]+)/) || ["", "연구 대상 구역"];
     const rangeStr = rangeMatch[1].trim().replace(/[:/\\*?|<>=]/g, '');
 
-    console.log(`🚀 [안티그래비티 9단계 풀-체인 분절 오토메이션 가동] 대상 구역: [${rangeStr}]`);
+    console.log(`🚀 [안티그래비티 9단계 독립 학술 파이프라인 가동] 대상 구역: [${rangeStr}]`);
 
     const decisions = safeRead(path.join(sharedDir, 'decisions.md')).slice(-3000);
 
@@ -49,7 +49,6 @@ async function run() {
 - [구절 3] 요한계시록 13장 18절 "지혜가 여기 있으니 총명한 자는 그 짐승의 수를 세어 보라 그것은 사람의 수니 그의 수는 육백육십육이니라"
 `;
 
-    // 9단계 초정밀 공정 파이프라인 레이아웃
     const roles = [
         { id: 1, name: "■ 역할 1번 (What 요원)", file: "identity_1.md", header: "### ■ 역할 1번 (What 요원)" },
         { id: 2, name: "■ 역할 2번 (Mechanism 요원)", file: "identity_2.md", header: "### ■ 역할 2번 (Mechanism 요원)" },
@@ -67,7 +66,7 @@ async function run() {
 
     for (const role of roles) {
         if (idx > 1) {
-            console.log(`· 503 과부하 방지 안전 대기 중... (8초 후 ${role.name} 세션 출격)`);
+            console.log(`· 과부하 방지 안전 대기 중... (8초 후 ${role.name} 세션 출격)`);
             await sleep(8000);
         }
 
@@ -79,7 +78,7 @@ async function run() {
             process.exit(1);
         }
 
-        const systemInstruction = `${roleSpecificIdentity}\n\n[이전 연구 자산]\n${decisions}\n\n주의: 당신은 오직 이 분절된 지침서에 명시된 임무만 독점 수행하며, 출력 한계선 눈치 보지 말고 최고 밀도로 쏟아내십시오.`;
+        const systemInstruction = `${roleSpecificIdentity}\n\n[이전 연구 자산]\n${decisions}\n\n주의: 당신은 오직 이 분절된 지침서에 명시된 임무만 독점 수행하며, 특정 단행본의 이념이나 주관적 프레임을 완전히 배제하고 오직 역사적·학술적 데이터로만 팩트를 기술하십시오.`;
         const prompt = `${targetVerses}\n\n[원본 분석 데이터]\n${rawContent}\n\n위의 3대 고정 구절과 문장 원형을 생략 없이 그대로 기재하고, 지침에 따라 오직 당신에게 할당된 독립 임무에만 100% 집중하여 팩트 결과만 정밀하게 정리해 주세요. 지정된 양식(표 등)이 있다면 절대로 자르지 말고 끝까지 채워 출력하세요.`;
 
         try {
@@ -105,28 +104,28 @@ async function run() {
 
     try {
         const verseClean = rangeStr.replace(/analysis_/g, '').replace(/_/g, ' ');
-        const frontmatter = `---\nverse: "${verseClean}"\nera: ["1st-Century", "Patristic", "Medieval", "Reformation", "Modern", "21st-Century"]\nscholars: ["Aune", "Origen", "Augustine", "Joachim", "Luther", "Grotius", "Darby", "Shincheonji"]\nkeywords: ["Horizontal Anchor", "Absolute-Text", "9-Segregation-Perfect"]\n---\n\n## ANTIGRAVITY INTEGRATED COORDINATION REPORT — REV-HISTORICAL-DATA-INTEGRATION\n\n본 보고서는 제공된 데이터 기반으로 요한계시록의 1세기 역사학적 고증과 이후 2,000년간 발생한 주요 해석 데이터 세트를 수평적으로 구조화하고 대조한 정밀 상세 기술서입니다.`;
+        const frontmatter = `---\nverse: "${verseClean}"\nera: ["1st-Century", "Patristic", "Medieval", "Reformation", "Modern", "21st-Century"]\nscholars: ["Aune", "Origen", "Augustine", "Joachim", "Luther", "Grotius", "Darby", "Shincheonji"]\nkeywords: ["Horizontal Anchor", "Absolute-Text", "Pure-Academic-Data"]\n---\n\n## ANTIGRAVITY INTEGRATED COORDINATION REPORT — REV-HISTORICAL-DATA-INTEGRATION\n\n본 보고서는 제공된 데이터 기반으로 요한계시록의 1세기 역사학적 고증과 이후 2,000년간 발생한 주요 해석 데이터 세트를 수평적으로 구조화하고 대조한 정밀 상세 기술서입니다.`;
 
-        const fixedPhrase = `\n\n---\n> 📝 *이 내용의 통찰은 책 《사기쳐줘서 고마워》 내용을 통해 정리하였습니다.*`;
-        const finalMasterpiece = frontmatter + accumulatedReport + fixedPhrase + `\n\n"본 보고서는 요한계시록의 주요 구절에 대한 시대별·주체별 해석 데이터를 수평선상에 나열하여 각각의 객관적 해석 메커니즘을 상호 비교하고, 이를 하나의 다차원적 해석학 지식 체계로 통합하며 분석을 마감함."`;
+        // 변경 포인트: 책 제목 인용구 및 특정 이념 문구 완전 삭제
+        const finalMasterpiece = frontmatter + accumulatedReport + `\n\n"본 보고서는 요한계시록의 주요 구절에 대한 시대별·주체별 해석 데이터를 수평선상에 나열하여 각각의 객관적 해석 메커니즘을 상호 비교하고, 이를 하나의 다차원적 해석학 지식 체계로 통합하며 분석을 마감함."`;
 
         const sessionDir = path.join(BRAIN_DIR, 'sessions');
         if (!fs.existsSync(sessionDir)) fs.mkdirSync(sessionDir, { recursive: true });
         const fileName = `analysis_${rangeStr.replace(/\s+/g, '_')}.md`;
 
         fs.writeFileSync(path.join(sessionDir, fileName), finalMasterpiece, 'utf8');
-        console.log(`\n🏆 [9단계 오토메이션 마스터피스 조립 완공] sessions/${fileName} 저장 완료!`);
+        console.log(`\n🏆 [독립 학술 보고서 완공] sessions/${fileName} 저장 완료!`);
 
         const masterIndexPath = path.join(BRAIN_DIR, 'MASTER_INDEX.md');
-        fs.appendFileSync(masterIndexPath, `- [${today()}] 요한계시록 9단계 극초밀도 개별 분절 리포트 (${rangeStr}) ➔ [[sessions/${fileName}]]\n`);
+        fs.appendFileSync(masterIndexPath, `- [${today()}] 요한계시록 독립 학술 데이터 리포트 (${rangeStr}) ➔ [[sessions/${fileName}]]\n`);
 
         try {
             const { execSync } = require('child_process');
             console.log('· [원격 요새 백업] 깃허브 업로드 중...');
             execSync('git add .', { cwd: BRAIN_DIR });
-            execSync(`git commit -m "Antigravity-Watcher: ${rangeStr} v7 9-chain loop perfect"`, { cwd: BRAIN_DIR });
+            execSync(`git commit -m "Academic-Release: ${rangeStr} pure factual report"`, { cwd: BRAIN_DIR });
             execSync('git push origin main', { cwd: BRAIN_DIR });
-            console.log(`🚀 [자동화 공정 전체 완료] 최종 완결본 원터치 백업 성공!`);
+            console.log(`🚀 [자동화 공정 전체 완료] 최종 학술 버전 백업 성공!`);
         } catch (gitErr) {
             console.log(`⚠️ 깃허브 백업 보류 (원고 자산은 로컬에 세이브됨)`);
         }
