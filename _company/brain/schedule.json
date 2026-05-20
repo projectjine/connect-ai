@@ -1,0 +1,13 @@
+{
+  "routine_name": "3-day Auto-Cycle",
+  "interval_hours": 72,
+  "start_date": "2026-05-14T11:02:13",
+  "last_run": "2026-05-14T11:02:13",
+  "next_run": "2026-05-17T11:02:13",
+  "tasks": [
+    { "agent": "현빈", "time": "07:00", "task": "Market Research" },
+    { "agent": "코다리", "time": "Immediate after Hyunbin", "task": "Content Planning" },
+    { "agent": "영숙", "time": "Within 1h after Kodari", "task": "Publishing Queue" }
+  ],
+  "status": "ACTIVE"
+}

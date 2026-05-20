@@ -1,0 +1,69 @@
+name: Deploy SocialLogicLab
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies (if any)
+        run: |
+          if (Test-Path -Path "requirements.txt") {
+            python -m pip install -r requirements.txt
+          }
+
+      - name: Deploy assets to theme directory
+        env:
+          WP_THEME_PATH: ${{ secrets.WP_THEME_PATH }}
+        run: |
+          Copy-Item -Path "stitch-global.css" -Destination "$env:WP_THEME_PATH\stitch-global.css" -Force
+          Copy-Item -Path "stitch-global.js"  -Destination "$env:WP_THEME_PATH\stitch-global.js" -Force
+          Copy-Item -Path "functions.php"   -Destination "$env:WP_THEME_PATH\functions.php" -Force
+
+      - name: Run web_master_surgery (optional)
+        if: env.RUN_SURGERY == 'true'
+        env:
+          JS_PATH: "${{ secrets.WP_THEME_PATH }}\assets\index-5EKcGoY5.js"
+        run: |
+          python scripts/web_master_surgery.py "$env:JS_PATH" '{"title":"CI 자동 삽입","excerpt":"GitHub Actions 배포 테스트","categories":["CI"],"image":"https://example.com/ci.jpg","content":"<p>CI 배포 성공</p>"}'
+
+      - name: Zip theme folder
+        run: |
+          $zipPath = "theme.zip"
+          Compress-Archive -Path "$env:WP_THEME_PATH\*" -DestinationPath $zipPath -Force
+
+      - name: Deploy via SFTP
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.WP_HOST }}
+          username: ${{ secrets.WP_USER }}
+          password: ${{ secrets.WP_PASS }}
+          source: "theme.zip"
+          target: "/var/www/html/wp-content/themes/"
+
+      - name: Remote SSH commands – unzip and cache flush
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.WP_HOST }}
+          username: ${{ secrets.WP_USER }}
+          password: ${{ secrets.WP_PASS }}
+          script: |
+            cd /var/www/html/wp-content/themes/
+            unzip -o theme.zip -d child-theme
+            rm theme.zip
+            wp cache flush

@@ -1,0 +1,117 @@
+/* ==== Google‑Stitch Design Tokens ==== */
+:root {
+  --stitch-green-light: #D4E2D4;   /* 배경·카드 */
+  --stitch-green-dark:  #4A654E;   /* 포인트·버튼 */
+  --font-headline: 'Playfair Display', serif;
+  --font-body:    'Arimo', sans-serif;
+}
+
+/* ---- 전역 폰트 리셋 ---- */
+body, button, input, textarea {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline);
+  letter-spacing: 0.025em;
+}
+
+/* ---- 색상 강제 오버라이드 ---- */
+.elementor-widget-heading .elementor-heading-title,
+.elementor-widget-text-editor,
+.elementor-button,
+.elementor-icon,
+.elementor-widget-image .elementor-image {
+  color: var(--stitch-green-dark) !important;
+  background-color: transparent !important;
+}
+.elementor-section,
+.elementor-container,
+.elementor-widget-container {
+  background-color: var(--stitch-green-light) !important;
+}
+
+/* 부드러운 트랜지션 */
+* { transition: background-color 0.3s, color 0.3s; }
+
+/* ---- Media Popup ---- */
+.media-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.media-modal.hidden { display: none; }
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.45);
+}
+.modal-content {
+  position: relative;
+  background: var(--stitch-green-light);
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.close-btn {
+  position: absolute;
+  top: .4rem;
+  right: .6rem;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--stitch-green-dark);
+  cursor: pointer;
+}
+
+/* ---- Insights Tabs ---- */
+.insights-tabs button {
+  background: var(--stitch-green-light);
+  border: none;
+  padding: .6rem 1rem;
+  margin: .3rem;
+  cursor: pointer;
+  font-family: var(--font-headline);
+}
+.insights-tabs button.active { background: var(--stitch-green-dark); color:#fff; }
+.insights-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+}
+.insight-card {
+  background:#fff;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+
+/* ---- Blur Guard for premium content ---- */
+.stitch-blur-guard .single-post .post-content {
+  position: relative;
+}
+.stitch-blur-guard .single-post .post-content::after {
+  content: "";
+  position: absolute;
+  inset: 60% 0 0 0; /* 40% 영역부터 블러 */
+  backdrop-filter: blur(12px);
+  background: rgba(212,226,212,0.5);
+  pointer-events: none;
+}
+.stitch-blur-guard .unlock-btn{
+  display:block;
+  margin:1rem auto;
+  padding:.5rem 1rem;
+  background:var(--stitch-green-dark);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}

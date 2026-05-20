@@ -57,7 +57,7 @@
     },
     "knowledge_base": {
       "second_brain_repo_url": "",
-      "data_location": "~/.connect-ai-brain/"
+      "data_location": "_company/brain"
     }
   },
   "workspace_snapshot": {

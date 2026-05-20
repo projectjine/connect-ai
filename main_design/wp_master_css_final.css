@@ -1,0 +1,205 @@
+/* ========================================================
+   [WebMaster] ZERO-TOUCH AUTOMATION ENGINE (V3 FINAL)
+   메인 사이트 완벽 동기화 및 절대 불변(Locked-in) 디자인 시스템
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+KR:wght@300;400;700&display=swap');
+
+/* 1. 디자인 고정 (Locked-in Foundation) */
+:root {
+    --brand-mint-white: #F7FAF9;
+    --brand-sage-dark: #2C332C;
+    --brand-sage-primary: #4A654E;
+    --brand-sage-hover: #2F3E33;
+    
+    --wp--preset--color--base: var(--brand-mint-white) !important; 
+    --wp--preset--color--primary: var(--brand-sage-primary) !important; 
+    --wp--preset--color--contrast: var(--brand-sage-dark) !important; 
+}
+
+/* 시스템 레벨 강제 초기화 및 반응형 밸런스 튜닝 */
+html {
+    font-size: 16px !important; /* Rem 기준점 고정 */
+}
+
+body, .wp-site-blocks, .is-root-container, .wp-block-group, section, header, footer, .entry-content {
+    background-color: var(--brand-mint-white) !important; 
+    color: var(--brand-sage-dark) !important;
+    max-width: 800px !important; /* 본문 몰입감을 위한 폭 최적화 */
+    margin: 0 auto !important;
+    padding-top: clamp(2rem, 5vw, 40px) !important; /* 모바일~데스크톱 여백 자동 대응 */
+    padding-bottom: clamp(3rem, 10vw, 80px) !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* ========================================================
+   2. 동적 타이포그래피 (Relative Scale & Clamp)
+   ======================================================== */
+
+/* 제목 (Playfair Display) - 유동적 부피감 */
+h1, .wp-block-post-title {
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    /* 모바일 2rem ~ 데스크톱 3.5rem 부드러운 전환 */
+    font-size: clamp(2rem, 4vw + 1rem, 3.5rem) !important; 
+    font-weight: 400 !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: clamp(1.5rem, 4vw, 3rem) !important;
+    color: var(--brand-sage-dark) !important;
+}
+
+h2, .wp-block-heading {
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(1.5rem, 3vw + 0.5rem, 2.25rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    margin-top: 3.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* 본문 최적화 (가독성 튜닝) */
+p, li, .wp-block-post-content {
+    font-family: 'Arimo', 'Noto Sans KR', sans-serif !important;
+    /* 시각적 피로도 최소화: 모바일 1rem(16px) ~ 데스크톱 1.125rem(18px) */
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.125rem) !important; 
+    line-height: 1.85 !important; /* 숨결이 느껴지는 여백 */
+    letter-spacing: -0.015em !important; /* 미세 자간 수축으로 밀도 상승 */
+    margin-bottom: 2rem !important;
+    color: rgba(44, 51, 44, 0.9) !important; /* 완전한 블랙이 아닌 부드러운 다크 세이지 */
+}
+
+/* ========================================================
+   3. 무결점 블록 시스템 & 동적 기능(Dynamic Interactions)
+   ======================================================== */
+
+/* 3-1. 이미지 및 미디어 (곡률 및 중복 방지) */
+img, .wp-block-image img {
+    border-radius: 24px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03) !important;
+    transition: transform 0.5s ease !important;
+    width: 100% !important;
+    height: auto !important;
+}
+/* 워드프레스 기본 특성 이미지 자동 출력 완전 차단 */
+.wp-block-post-featured-image {
+    display: none !important; 
+}
+figcaption, .wp-element-caption {
+    text-align: center !important;
+    font-size: 0.85rem !important;
+    color: rgba(44, 51, 44, 0.5) !important;
+    font-style: italic !important;
+    margin-top: 1.2rem !important;
+}
+
+/* 3-2. 유리 질감 인용구 (Key Takeaway 자동화) */
+blockquote, .wp-block-quote {
+    border: none !important;
+    border-left: 4px solid var(--brand-sage-primary) !important; 
+    /* 고급스러운 글래스모피즘 */
+    background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4)) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    padding: clamp(1.5rem, 4vw, 2.5rem) !important; 
+    border-radius: 0 16px 16px 0 !important; 
+    margin: 3.5rem 0 !important;
+    box-shadow: 0 8px 32px rgba(74, 101, 78, 0.05) !important;
+    font-family: 'Playfair Display', 'Noto Sans KR', serif !important; 
+    font-style: italic !important;
+    font-size: clamp(1.1rem, 2vw + 0.5rem, 1.35rem) !important; 
+    line-height: 1.7 !important;
+    color: var(--brand-sage-dark) !important;
+}
+cite, .wp-block-quote__citation {
+    font-family: 'Arimo', sans-serif !important;
+    font-size: 0.85rem !important;
+    color: var(--brand-sage-primary) !important;
+    font-weight: 700 !important;
+    font-style: normal !important;
+    display: block !important;
+    margin-top: 1.5rem !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* 3-3. 버튼 애니메이션 (메인 사이트 엔진 이식) */
+.wp-block-button__link {
+    background-color: var(--brand-sage-primary) !important;
+    color: #FFFFFF !important;
+    border-radius: 24px !important; 
+    padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.5rem) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    text-decoration: none !important;
+    font-family: 'Arimo', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    display: inline-block !important;
+    box-shadow: 0 4px 15px rgba(74, 101, 78, 0.15) !important;
+}
+.wp-block-button__link:hover {
+    background-color: var(--brand-sage-hover) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 8px 25px rgba(74, 101, 78, 0.25) !important;
+}
+
+/* 3-4. 추천 글 카드 (메인 사이트 호버 이식) */
+.wp-block-latest-posts {
+    display: grid !important; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important; 
+    gap: 2rem !important; 
+    padding: 0 !important; 
+    list-style: none !important;
+    margin-top: 2rem !important;
+}
+.wp-block-latest-posts li {
+    background: #FFFFFF !important; 
+    border: 1px solid rgba(74, 101, 78, 0.08) !important;
+    border-radius: 24px !important; 
+    padding: 2rem !important; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important; 
+    display: flex !important; 
+    flex-direction: column !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important;
+}
+.wp-block-latest-posts li:hover {
+    transform: translateY(-8px) !important; 
+    box-shadow: 0 20px 40px rgba(74, 101, 78, 0.08) !important; 
+    border-color: rgba(74, 101, 78, 0.2) !important;
+}
+.wp-block-latest-posts li a { 
+    font-family: 'Playfair Display', 'Noto Sans KR', serif !important;
+    font-size: clamp(1.1rem, 1.5vw + 0.5rem, 1.3rem) !important; 
+    color: var(--brand-sage-dark) !important; 
+    font-weight: 600 !important; 
+    text-decoration: none !important; 
+    line-height: 1.4 !important;
+    margin-bottom: 0.5rem !important;
+}
+.wp-block-latest-posts .wp-block-latest-posts__post-date { 
+    font-family: 'Arimo', sans-serif !important;
+    font-size: 0.8rem !important; 
+    color: var(--brand-sage-primary) !important; 
+    margin-bottom: 1rem !important; 
+    display: block !important; 
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    font-weight: 700 !important;
+}
+
+/* 4. 구분선 (Separator) - 투명도 그라데이션 */
+hr, .wp-block-separator {
+    border: none !important;
+    height: 1px !important;
+    background: linear-gradient(to right, transparent, rgba(74, 101, 78, 0.2), transparent) !important;
+    margin: clamp(3rem, 8vw, 5rem) auto !important;
+    width: 80% !important;
+}
+
+/* 메타 카테고리 태그 */
+.insight-category {
+    text-transform: uppercase !important;
+    letter-spacing: 0.15em !important;
+    font-size: 0.8rem !important;
+    margin-bottom: 1.5rem !important;
+}

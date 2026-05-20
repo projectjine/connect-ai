@@ -1,0 +1,94 @@
+/* ========================================================
+   팀 안티그래비티: Insight Detail 페이지 1:1 복제 동기화
+   ======================================================== */
+
+/* 1. 구글 폰트 코어 임포트 */
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;500;600;700;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+/* 2. 전역 캔버스 (배경색 및 기본 폰트) */
+body, .wp-site-blocks, .is-root-container {
+    background-color: #F4F7F4 !important; /* Atmospheric Background */
+    color: #2C332C !important;            /* Text On-Surface */
+    font-family: 'Arimo', 'Noto Sans KR', sans-serif !important;
+}
+
+/* 3. 본문 가로 폭(Max-width) 및 상단 여백 (공간 분석 결과) */
+.wp-site-blocks > *, main {
+    max-width: 768px !important;          /* 메인 사이트의 max-w-3xl (48rem) 정확히 일치 */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+.wp-site-blocks {
+    padding-top: 4rem !important;         /* 텍스트 시작 지점의 여유로운 상단 여백 */
+}
+
+/* 4. 제목 아키텍처 (Serif 이식 및 날짜 디테일) */
+h1, h2, h3, h4, h5, h6, .wp-block-post-title, .wp-block-heading {
+    font-family: 'Playfair Display', 'Noto Sans KR', serif !important;
+    color: #1A241E !important;            
+    font-weight: 600 !important;
+    margin-bottom: 1.5rem !important;
+}
+.wp-block-post-date, .wp-block-post-author {
+    font-size: 0.875rem !important;       /* text-sm: 메인 사이트의 세밀한 날짜 크기 */
+    color: rgba(44, 51, 44, 0.6) !important; /* text-on-surface-variant/60 */
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+/* 5. 본문 텍스트 디테일 (문단 간격 및 줄간격) */
+p, .wp-block-paragraph {
+    font-size: 1.125rem !important;       /* text-lg: 가독성을 높인 본문 폰트 크기 */
+    line-height: 1.9 !important;          /* 메인 사이트 prose-custom 1.9 줄간격 완벽 복제 */
+    margin-bottom: 2rem !important;       /* 문단 사이의 깊은 호흡(mb-8) 부여 */
+}
+
+/* 6. 구분선 (Separator) 투명도 계산 적용 */
+hr, .wp-block-separator {
+    border-top: 1px solid rgba(44, 51, 44, 0.1) !important; /* border-[#2c332c]/10 투명도 */
+    margin-top: 3rem !important;
+    margin-bottom: 3rem !important;
+}
+
+/* 7. 인용구 및 성찰(Danhae) 섹션 특화 스타일 */
+blockquote, .wp-block-quote {
+    border-left: 2px solid rgba(74, 101, 78, 0.3) !important; /* Brand Sage 투명도 적용 */
+    padding-left: 1.5rem !important;
+    font-family: 'Playfair Display', 'Noto Sans KR', serif !important;
+    font-style: italic !important;
+    color: rgba(44, 51, 44, 0.9) !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+/* 8. 버튼 및 하단 관련 글 카드 (Border-radius 둥근 모서리 계산) */
+.wp-block-button__link {
+    background-color: #4A654E !important;
+    color: #FFFFFF !important;
+    border-radius: 1rem !important;       /* rounded-2xl (16px) 이식 */
+    padding: 0.75rem 1.5rem !important;
+    transition: all 0.3s ease !important;
+}
+.wp-block-button__link:hover {
+    background-color: #2F3E33 !important;
+    transform: translateY(-2px) !important;
+}
+/* 하단 관련 글(최신 글 블록 등) 카드의 둥근 모서리 및 유리 질감 복제 */
+.wp-block-latest-posts li, .wp-block-post {
+    border-radius: 1.5rem !important;     /* rounded-3xl (24px) 이식 */
+    background-color: rgba(255, 255, 255, 0.4) !important; /* Glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 9. 이미지 캡션 */
+figcaption, .wp-element-caption {
+    text-align: center !important;
+    font-size: 0.875rem !important;
+    color: rgba(44, 51, 44, 0.6) !important;
+    font-style: italic !important;
+    margin-top: 1rem !important;
+}
