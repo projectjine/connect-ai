@@ -35,4 +35,4 @@ winscp.com /script=winSCPscript.txt
 Write-Host "🔧 원격 서버에서 압축 해제 및 캐시 플러시 중"
 ssh $env:WP_USER@$env:WP_HOST "cd /var/www/html/wp-content/themes/; unzip -o theme.zip -d child-theme; rm theme.zip; wp cache flush"
 
-Write-Host "✅ 배포 완료"
+Write-Host "Deployment complete"
